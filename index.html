@@ -1073,9 +1073,9 @@ const examDatabase = {
         ]
     },
 
-    "room_assignment2026": {
-        title: "Assignment Essay Questions 2025/2026 — PHYS102",
-        meta: "PHYS102 | Minia University, Faculty of Science | Assignment 2025–2026 | Optics + Electricity | Essay & Numerical Questions",
+    "room_it_essay2026": {
+        title: "Assignment IT Essay — 2026 (Q1–15)",
+        meta: "PHYS102 | Minia University, Faculty of Science | Assignment 2025–2026 | IT Section | Optics Essay Q1–15",
         questions: [
             // ─── OPTICS ─────────────────────────────────────────────────────────────────
             { id: "asgn_q1", type: "subjective",
@@ -1137,7 +1137,13 @@ const examDatabase = {
             { id: "asgn_q15", type: "subjective",
               text: "15. [Optics — Numerical] A medical endoscope relies on total internal reflection to keep light strength constant. If the core fiber has n = 1.6 and the cladding has n = 1.4, what is the critical angle, and what happens if the tube bends so sharply that light hits the wall at 55°?",
               modelSolution: "Critical angle calculation:\n  sinθ_c = n_cladding / n_core = 1.4 / 1.6 = 0.875\n  θ_c = arcsin(0.875)\n  ✅ θ_c ≈ 61.04° ≈ 61°\n\nWhat happens at 55°?\nIf the fiber bends sharply, light hits the wall at 55°, which is LESS than θ_c = 61°.\n→ The condition for total internal reflection (θ ≥ θ_c) is NOT satisfied.\n→ Light refracts OUT of the fiber into the cladding instead of reflecting back.\n→ Light escapes the fiber, causing signal/image loss.\n✅ At 55° < θ_c (61°): total internal reflection fails — light leaks out of the fiber." },
+        ]
+    },
 
+    "room_general_essay2026": {
+        title: "Assignment General Essay — 2026 (Q16–41)",
+        meta: "PHYS102 | Minia University, Faculty of Science | Assignment 2025–2026 | General Section | Eye Defects + Electricity Q16–41",
+        questions: [
             // ─── EYE DEFECTS ────────────────────────────────────────────────────────────
             { id: "asgn_q16", type: "subjective",
               text: "16. [Optics — Eye] Define myopia.",
@@ -1262,28 +1268,23 @@ let _navScrollLock = false;
 let _navScrollHandler = null;
 
 // ===================== STORAGE FUNCTIONS =====================
-// Using both localStorage and sessionStorage for redundancy
+// Answers & scores: sessionStorage ONLY (cleared when tab/window closes → always start fresh)
+// Theme & active room: localStorage (persists across sessions)
 function loadStateFromStorage() {
     try {
-        // Try localStorage first, fallback to sessionStorage
-        let storedScores = localStorage.getItem("phys102_portal_scores_v2") || sessionStorage.getItem("phys102_portal_scores_v2");
-        let storedAnswers = localStorage.getItem("phys102_portal_answers_v2") || sessionStorage.getItem("phys102_portal_answers_v2");
-        let storedActiveRoom = localStorage.getItem("phys102_portal_activeRoom_v2") || sessionStorage.getItem("phys102_portal_activeRoom_v2");
-        let storedTheme = localStorage.getItem("phys102_portal_theme_v2") || sessionStorage.getItem("phys102_portal_theme_v2");
-        let storedTranslations = localStorage.getItem("phys102_portal_translations_v2") || sessionStorage.getItem("phys102_portal_translations_v2");
-        
-        // Also try cookies as additional fallback
-        if (!storedScores) storedScores = getCookie("phys102_scores");
-        if (!storedAnswers) storedAnswers = getCookie("phys102_answers");
-        if (!storedActiveRoom) storedActiveRoom = getCookie("phys102_activeRoom");
-        if (!storedTheme) storedTheme = getCookie("phys102_theme");
-        if (!storedTranslations) storedTranslations = getCookie("phys102_translations");
-        
-        if (storedScores) roomScores = JSON.parse(storedScores);
+        // Answers and scores live in sessionStorage only — new tab = clean slate
+        let storedScores   = sessionStorage.getItem("phys102_portal_scores_v3");
+        let storedAnswers  = sessionStorage.getItem("phys102_portal_answers_v3");
+        let storedPositions = sessionStorage.getItem("phys102_portal_positions_v3");
+
+        // Theme and last active room persist in localStorage
+        let storedActiveRoom = localStorage.getItem("phys102_portal_activeRoom_v3");
+        let storedTheme      = localStorage.getItem("phys102_portal_theme_v3");
+
+        if (storedScores)  roomScores = JSON.parse(storedScores);
         if (storedAnswers) userAnswers = JSON.parse(storedAnswers);
         if (storedActiveRoom && examDatabase[storedActiveRoom]) activeRoomKey = storedActiveRoom;
         if (storedTheme) currentTheme = storedTheme;
-        let storedPositions = localStorage.getItem("phys102_portal_positions_v2") || sessionStorage.getItem("phys102_portal_positions_v2") || getCookie("phys102_positions");
         if (storedPositions) {
             try { roomQuestionPositions = JSON.parse(storedPositions); } catch (e) {}
         }
@@ -1295,34 +1296,14 @@ function loadStateFromStorage() {
 
 function saveStateToStorage() {
     try {
-        const scoresJSON = JSON.stringify(roomScores);
-        const answersJSON = JSON.stringify(userAnswers);
-        const translationsJSON = JSON.stringify(translatedQuestions);
-        const positionsJSON = JSON.stringify(roomQuestionPositions);
-        
-        // Save to localStorage
-        localStorage.setItem("phys102_portal_scores_v2", scoresJSON);
-        localStorage.setItem("phys102_portal_answers_v2", answersJSON);
-        localStorage.setItem("phys102_portal_activeRoom_v2", activeRoomKey);
-        localStorage.setItem("phys102_portal_theme_v2", currentTheme);
-        localStorage.setItem("phys102_portal_translations_v2", translationsJSON);
-        localStorage.setItem("phys102_portal_positions_v2", positionsJSON);
-        
-        // Save to sessionStorage as backup
-        sessionStorage.setItem("phys102_portal_scores_v2", scoresJSON);
-        sessionStorage.setItem("phys102_portal_answers_v2", answersJSON);
-        sessionStorage.setItem("phys102_portal_activeRoom_v2", activeRoomKey);
-        sessionStorage.setItem("phys102_portal_theme_v2", currentTheme);
-        sessionStorage.setItem("phys102_portal_translations_v2", translationsJSON);
-        sessionStorage.setItem("phys102_portal_positions_v2", positionsJSON);
-        
-        // Save to cookies (for 365 days)
-        setCookie("phys102_scores", scoresJSON, 365);
-        setCookie("phys102_answers", answersJSON, 365);
-        setCookie("phys102_activeRoom", activeRoomKey, 365);
-        setCookie("phys102_theme", currentTheme, 365);
-        setCookie("phys102_translations", translationsJSON, 365);
-        setCookie("phys102_positions", positionsJSON, 365);
+        // Answers & scores → sessionStorage (gone when tab closes)
+        sessionStorage.setItem("phys102_portal_scores_v3",    JSON.stringify(roomScores));
+        sessionStorage.setItem("phys102_portal_answers_v3",   JSON.stringify(userAnswers));
+        sessionStorage.setItem("phys102_portal_positions_v3", JSON.stringify(roomQuestionPositions));
+
+        // Theme & room → localStorage (survives browser restarts)
+        localStorage.setItem("phys102_portal_activeRoom_v3", activeRoomKey);
+        localStorage.setItem("phys102_portal_theme_v3",      currentTheme);
     } catch (e) {
         console.error("Error saving state:", e);
     }
@@ -1683,8 +1664,8 @@ function renderQuestions(questions) {
         const btnLabel = isSubjective ? "الإجابة النموذجية" : "الاجابات النموذجية";
         const btnOnclick = isSubjective
             ? `toggleModelAnswer('${q.id}')`
-            : `toggleTranslation('${q.id}')`;
-        const btnId = isSubjective ? `model-btn-${q.id}` : `translate-btn-${q.id}`;
+            : `toggleExplanation('${q.id}')`;
+        const btnId = isSubjective ? `model-btn-${q.id}` : `explain-btn-${q.id}`;
         const boxId = isSubjective ? `model-box-${q.id}` : `translation-${q.id}`;
 
         let html = `
@@ -1767,17 +1748,38 @@ function renderQuestions(questions) {
     });
 
     typesetMath([form]);
+
+    // Re-apply instant feedback for already-answered questions (if not submitted)
+    if (!roomScores[activeRoomKey] || !roomScores[activeRoomKey].submitted) {
+        const answers = userAnswers[activeRoomKey] || {};
+        questions.forEach(q => {
+            if ((q.type === "mcq" || q.type === "tf") && answers[q.id] !== undefined && answers[q.id] !== null && answers[q.id] !== '') {
+                setTimeout(() => instantFeedback(q.id, answers[q.id]), 0);
+            }
+        });
+    }
 }
 
 function toggleExplanation(qId) {
     const explainBox = document.getElementById(`explain-${qId}`);
     const btn = document.getElementById(`explain-btn-${qId}`);
-    if (!explainBox || !btn) return;
+    if (!explainBox) return;
     
     explainBox.classList.toggle("hidden");
-    const showLabel = btn.dataset.showLabel || "Show Detailed Explanation";
-    const hideLabel = btn.dataset.hideLabel || "Hide Explanation";
-    btn.textContent = explainBox.classList.contains("hidden") ? showLabel : hideLabel;
+    if (btn) {
+        const spanEl = btn.querySelector('span') || btn;
+        const showLabel = "الاجابات النموذجية";
+        const hideLabel = "إخفاء الشرح";
+        if (explainBox.classList.contains("hidden")) {
+            spanEl.textContent = showLabel;
+            btn.classList.remove('bg-emerald-600');
+            if (!btn.classList.contains('translate-btn')) btn.classList.add('translate-btn');
+        } else {
+            spanEl.textContent = hideLabel;
+            btn.classList.remove('translate-btn');
+            btn.classList.add('bg-emerald-600');
+        }
+    }
 }
 
 function saveAnswer(qId, value) {
@@ -1785,6 +1787,48 @@ function saveAnswer(qId, value) {
     userAnswers[activeRoomKey][qId] = value;
     saveStateToStorage();
     updateNavigatorAnsweredCount();
+    // Instant feedback for MCQ/TF (only if room not yet submitted)
+    if (!roomScores[activeRoomKey] || !roomScores[activeRoomKey].submitted) {
+        instantFeedback(qId, value);
+    }
+}
+
+function instantFeedback(qId, value) {
+    const room = examDatabase[activeRoomKey];
+    if (!room) return;
+    const q = room.questions.find(qq => qq.id === qId);
+    if (!q || (q.type !== "mcq" && q.type !== "tf")) return;
+
+    const statusEl = document.getElementById(`status-${qId}`);
+    const explainBox = document.getElementById(`explain-${qId}`);
+
+    let isCorrect = false;
+    if (q.type === "mcq") {
+        isCorrect = parseInt(value) === q.answer;
+    } else if (q.type === "tf") {
+        const correctStr = q.answer ? "true" : "false";
+        isCorrect = value === correctStr;
+    }
+
+    if (isCorrect) {
+        // Show صواب and close explain box
+        if (statusEl) statusEl.innerHTML = "<span class='text-emerald-400 font-bold text-sm flex items-center gap-1'><svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4' viewBox='0 0 20 20' fill='currentColor'><path fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/></svg> صواب</span>";
+        if (explainBox && !explainBox.classList.contains("hidden")) {
+            explainBox.classList.add("hidden");
+            // Reset explain button label
+            const btn = document.getElementById(`explain-btn-${qId}`);
+            if (btn) btn.textContent = btn.dataset.showLabel || "الاجابات النموذجية";
+        }
+    } else {
+        // Show خطأ and open explain box automatically
+        if (statusEl) statusEl.innerHTML = "<span class='text-rose-400 font-bold text-sm flex items-center gap-1'><svg xmlns='http://www.w3.org/2000/svg' class='w-4 h-4' viewBox='0 0 20 20' fill='currentColor'><path fill-rule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clip-rule='evenodd'/></svg> خطأ</span>";
+        if (explainBox && explainBox.classList.contains("hidden")) {
+            explainBox.classList.remove("hidden");
+            // Update explain button label
+            const btn = document.getElementById(`explain-btn-${qId}`);
+            if (btn) btn.textContent = btn.dataset.hideLabel || "إخفاء الشرح";
+        }
+    }
 }
 
 // ===================== QUESTION NAVIGATOR =====================
@@ -2118,6 +2162,17 @@ function switchRoom(key) {
 
 // ===================== INITIALIZATION =====================
 function initializePlatform() {
+    // Clear legacy keys (v2 and cookies) that caused answers to persist across sessions
+    try {
+        ['phys102_portal_scores_v2','phys102_portal_answers_v2','phys102_portal_activeRoom_v2',
+         'phys102_portal_theme_v2','phys102_portal_translations_v2','phys102_portal_positions_v2'].forEach(k => {
+            localStorage.removeItem(k); sessionStorage.removeItem(k);
+        });
+        // Expire old cookies
+        ['phys102_scores','phys102_answers','phys102_activeRoom','phys102_theme','phys102_translations','phys102_positions'].forEach(k => {
+            document.cookie = k + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+        });
+    } catch(e) {}
     loadStateFromStorage();
     applyThemeOnLoad();
     const navbarContainer = document.getElementById("navbar-rooms-container");
@@ -2126,7 +2181,8 @@ function initializePlatform() {
     // Sorted rooms from newest to oldest (left to right)
     const sortedRooms = [
         { key: "room_dr_ali", label: "Dr. Ali — Coulomb" },
-        { key: "room_assignment2026", label: "2026 Assignment" },
+        { key: "room_it_essay2026", label: "2026 IT Essay" },
+        { key: "room_general_essay2026", label: "2026 General Essay" },
         { key: "room_2025", label: "2025 Final" },
         { key: "room_2024", label: "2024 Final" },
         { key: "room_2023", label: "2023 Final" },
@@ -2186,7 +2242,7 @@ document.addEventListener('keydown', (e) => {
             <div class="space-y-3">
                 <p class="text-[11px] uppercase tracking-[0.3em] text-slate-400 font-extrabold opacity-80">Made With Passion By</p>
                 <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 pt-2">
-                    <h2 class="footer-name-1 text-2xl md:text-4xl font-black tracking-wide hover:scale-105 transition-transform cursor-default duration-300 select-none">ENG: ABO ANWER</h2>
+                    <h2 class="footer-name-1 text-2xl md:text-4xl font-black tracking-wide hover:scale-105 transition-transform cursor-default duration-300 select-none">ENG: AHMED ABO ANWER</h2>
                     <span class="hidden md:block text-slate-500 font-light text-2xl">|</span>
                     <h2 class="footer-name-2 text-2xl md:text-4xl font-black tracking-wide hover:scale-105 transition-transform cursor-default duration-300 select-none">ENG: HAMZA KAFAFI</h2>
                 </div>
