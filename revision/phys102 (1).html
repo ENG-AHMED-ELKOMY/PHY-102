@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHYS102 — الكهرومغناطيسية والبصريات | Electromagnetism &amp; Optics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&amp;family=Inter:wght@300;400;600;700;900&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
+<script>
+  MathJax = { tex: { inlineMath: [['\\(','\\)'],['$','$']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<style>
+  :root{
+    --bg:#070b18;
+    --surface:#0f172a;
+    --surface2:#172036;
+    --card:#1a2445;
+    --border:rgba(255,255,255,.08);
+    --border-strong:#243355;
+    --text:#e8edf8;
+    --muted:#8aa0c4;
+    --dim:#54678a;
+    --accent:#4f9cf0;
+    --cyan:#22d3ee;
+    --teal:#2dd4bf;
+    --gold:#e8b84b;
+    --amber:#f59e0b;
+    --rose:#f87171;
+    --emerald:#10b981;
+    --violet:#8b5cf6;
+    --orange:#fb923c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;font-size:16px;line-height:1.8;overflow-x:hidden}
+  body[data-lang="en"]{font-family:'Inter',sans-serif;direction:ltr}
+  body[data-lang="en"] .data-table th,
+  body[data-lang="en"] .data-table td{text-align:left}
+
+  /* i18n toggle */
+  .ar,.en{display:none}
+  body[data-lang="ar"] .ar{display:revert}
+  body[data-lang="en"] .en{display:revert}
+  /* keep table cells block */
+  td .ar,td .en,th .ar,th .en,li .ar,li .en,p .ar,p .en,strong .ar,strong .en,span.swap .ar,span.swap .en{display:inline}
+  body[data-lang="ar"] td .en,body[data-lang="ar"] th .en,body[data-lang="ar"] li .en,body[data-lang="ar"] p .en,body[data-lang="ar"] span.swap .en{display:none}
+  body[data-lang="en"] td .ar,body[data-lang="en"] th .ar,body[data-lang="en"] li .ar,body[data-lang="en"] p .ar,body[data-lang="en"] span.swap .ar{display:none}
+
+  /* starfield */
+  #stars{position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 30% 20%,#0d1a3a 0%,#070b18 60%)}
+  .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d) ease-in-out infinite alternate}
+  @keyframes twinkle{from{opacity:.1}to{opacity:.9}}
+
+  /* progress bar */
+  #progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--teal),var(--violet));z-index:200;transition:width .1s;width:0}
+
+  /* TOP BAR */
+  .topbar{position:fixed;top:0;right:0;left:0;z-index:150;background:rgba(7,11,24,.75);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--cyan);letter-spacing:.18em}
+  .lang-switch{display:inline-flex;background:var(--surface2);border:1px solid var(--border-strong);border-radius:100px;padding:3px;font-family:'IBM Plex Mono',monospace}
+  .lang-switch button{background:transparent;border:0;color:var(--muted);padding:6px 16px;border-radius:100px;cursor:pointer;font-size:.78rem;letter-spacing:.1em;font-weight:600;transition:all .2s}
+  .lang-switch button.active{background:linear-gradient(135deg,var(--accent),var(--teal));color:#fff}
+
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px;position:relative;z-index:1}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(79,156,240,.12);border:1px solid rgba(79,156,240,.35);border-radius:100px;padding:7px 22px;font-size:.78rem;color:var(--accent);letter-spacing:.18em;text-transform:uppercase;margin-bottom:28px;font-family:'IBM Plex Mono',monospace}
+  .hero h1{font-size:clamp(2.6rem,7vw,5rem);font-weight:900;line-height:1.1;background:linear-gradient(135deg,#fff 0%,#a0c4ff 35%,var(--teal) 65%,var(--violet) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px}
+  .hero-sub{font-size:1.15rem;color:var(--muted);max-width:680px;margin:0 auto 36px}
+  .hero-eq{font-family:'IBM Plex Mono',monospace;font-size:.95rem;color:var(--cyan);background:var(--surface);border:1px solid var(--border);padding:14px 24px;border-radius:8px;margin-bottom:32px;display:inline-block}
+  .hero-stats{display:flex;gap:48px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+  .stat{text-align:center}
+  .stat-n{font-size:2.2rem;font-weight:900;color:var(--teal);font-family:'IBM Plex Mono',monospace}
+  .stat-l{font-size:.75rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;margin-top:4px}
+
+  /* TOC */
+  .toc{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:880px;margin:0 auto}
+  .toc a{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:100px;text-decoration:none;font-size:.85rem;transition:all .2s}
+  .toc a:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+  /* SECTION HEADER */
+  .part-header{padding:80px 0 30px;text-align:center}
+  .part-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+  .part-title{font-size:clamp(2rem,5vw,3.2rem);font-weight:900;background:linear-gradient(135deg,#fff,var(--accent) 60%,var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px}
+  .part-sub{color:var(--muted);max-width:620px;margin:0 auto;font-size:1.02rem}
+
+  .chapter{padding:40px 0}
+  .chapter-header{display:flex;align-items:baseline;gap:18px;margin-bottom:28px;flex-wrap:wrap}
+  body[data-lang="en"] .chapter-header{direction:ltr}
+  .chapter-num{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--accent);letter-spacing:.18em;background:rgba(79,156,240,.1);padding:5px 14px;border-radius:6px;border:1px solid rgba(79,156,240,.25);text-transform:uppercase}
+  .chapter h2{font-size:1.85rem;font-weight:800;color:var(--text)}
+
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:26px 28px;margin-bottom:22px;position:relative;overflow:hidden}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.7}
+  .card h3{font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  .card h4{font-size:1rem;color:var(--accent);margin:14px 0 8px;font-weight:600}
+  .card p{color:#cfd8ee;margin-bottom:10px}
+  .card ul{margin:10px 22px;color:#cfd8ee}
+  .card li{margin-bottom:6px}
+  .card strong{color:var(--text)}
+
+  .two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+
+  .formula{background:var(--surface2);border:1px solid var(--border-strong);border-radius:10px;padding:16px 18px;text-align:center}
+  .formula .label{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+  .formula .eq{font-family:'IBM Plex Mono',monospace;font-size:1.05rem;color:var(--teal);font-weight:600;margin:6px 0;direction:ltr}
+  .formula .desc{font-size:.78rem;color:var(--muted);margin-top:6px}
+  .formula-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+
+  .eq-block{background:var(--surface2);border:1px solid var(--border-strong);border-radius:10px;padding:22px 26px;margin:18px 0;text-align:center;direction:ltr;font-size:1.08rem}
+  .eq-label{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px}
+
+  /* highlight + info + insight + bridge */
+  .highlight{background:linear-gradient(135deg,rgba(45,212,191,.08),rgba(79,156,240,.06));border-right:3px solid var(--teal);border-left:3px solid transparent;padding:14px 18px;border-radius:8px;margin:14px 0;font-size:.95rem}
+  body[data-lang="en"] .highlight{border-left:3px solid var(--teal);border-right:3px solid transparent}
+  .info-box{background:rgba(79,156,240,.06);border:1px dashed rgba(79,156,240,.3);padding:14px 18px;border-radius:8px;margin:12px 0;font-size:.93rem}
+  .insight{display:flex;gap:14px;align-items:flex-start;border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.05);padding:16px 20px;border-radius:10px;margin:16px 0;font-size:.93rem}
+  .insight-icon{font-size:1.4rem;flex-shrink:0}
+
+  /* BRIDGE — connects EM ↔ Optics */
+  .bridge{background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(34,211,238,.05));border:1px solid rgba(139,92,246,.3);border-radius:14px;padding:22px 26px;margin:24px 0;position:relative}
+  .bridge::before{content:'⇌';position:absolute;top:-18px;right:24px;background:var(--bg);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--violet);font-size:1.4rem;border:1px solid rgba(139,92,246,.4)}
+  body[data-lang="en"] .bridge::before{right:auto;left:24px}
+  .bridge-label{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.18em;color:var(--violet);text-transform:uppercase;margin-bottom:10px;font-weight:700}
+  .bridge h4{color:var(--violet);margin-bottom:10px;font-size:1rem}
+  .bridge p{color:#d8defa;font-size:.95rem;margin-bottom:8px}
+
+  /* tables */
+  .table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin:14px 0}
+  table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:480px}
+  thead{background:var(--surface2)}
+  th{padding:12px 14px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--border-strong)}
+  td{padding:12px 14px;border-bottom:1px solid var(--border);color:#d8e0f3;text-align:right;vertical-align:middle}
+  body[data-lang="en"] th,body[data-lang="en"] td{text-align:left}
+  tbody tr:hover td{background:rgba(255,255,255,.02)}
+
+  /* examples */
+  .example{background:rgba(232,184,75,.04);border:1px solid rgba(232,184,75,.25);border-radius:10px;padding:16px 20px;margin:14px 0}
+  .example-label{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;font-weight:700}
+  .sol{background:var(--surface);border-radius:6px;padding:12px 14px;margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:.85rem;color:#d8e0f3;line-height:1.9;direction:ltr;text-align:left}
+
+  .tag{display:inline-block;font-size:.7rem;padding:3px 10px;border-radius:100px;margin:0 4px;font-family:'IBM Plex Mono',monospace}
+  .tag-blue{background:rgba(79,156,240,.15);color:var(--accent)}
+  .tag-gold{background:rgba(232,184,75,.12);color:var(--gold)}
+  .tag-teal{background:rgba(45,212,191,.12);color:var(--teal)}
+  .tag-violet{background:rgba(139,92,246,.12);color:var(--violet)}
+  .tag-rose{background:rgba(248,113,113,.12);color:var(--rose)}
+
+  /* flow */
+  .flow{display:flex;flex-direction:column;gap:0;margin:24px auto;max-width:560px}
+  .flow-node{background:var(--surface2);border:1px solid var(--border-strong);border-radius:8px;padding:14px 18px;text-align:center;font-size:.95rem}
+  .flow-node.active{border-color:var(--cyan);background:rgba(34,211,238,.05);color:var(--cyan);font-weight:600}
+  .flow-node.violet{border-color:var(--violet);background:rgba(139,92,246,.05);color:var(--violet);font-weight:600}
+  .flow-arrow{display:flex;flex-direction:column;align-items:center;padding:6px 0}
+  .flow-arrow span{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--amber);margin-bottom:2px}
+  .flow-arrow::after{content:'↓';color:var(--muted);font-size:1.3rem}
+
+  /* rules */
+  .rules-list{display:flex;flex-direction:column;gap:10px;margin:14px 0}
+  .rule-item{display:flex;gap:14px;padding:12px 16px;background:var(--surface2);border:1px solid var(--border);border-radius:8px}
+  .rule-num{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--cyan);min-width:28px;font-weight:700}
+  .rule-text{font-size:.93rem;color:#cfd8ee}
+  .rule-text strong{color:var(--text)}
+
+  /* cheatsheet */
+  .cheat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:18px}
+  .cheat-item{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+  .cheat-topic{font-size:.7rem;font-family:'IBM Plex Mono',monospace;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+  .cheat-eq{font-size:1rem;color:var(--cyan);font-weight:600;direction:ltr}
+
+  /* quiz */
+  .quiz-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:10px;cursor:pointer;transition:border-color .2s;position:relative}
+  .quiz-item:hover{border-color:var(--accent)}
+  .quiz-toggle{position:absolute;top:14px;left:18px;color:var(--muted);font-size:.85rem;transition:transform .2s}
+  body[data-lang="ar"] .quiz-toggle{left:auto;right:18px}
+  .quiz-item.open .quiz-toggle{transform:rotate(180deg)}
+  .quiz-question{margin:0 28px;font-size:.95rem;color:var(--text)}
+  .quiz-answer{max-height:0;overflow:hidden;transition:max-height .25s ease}
+  .quiz-item.open .quiz-answer{max-height:160px}
+  .quiz-answer-inner{margin-top:12px;padding:10px 14px;border-radius:6px;font-size:.88rem}
+  .true-ans{background:rgba(16,185,129,.1);color:var(--emerald);border:1px solid rgba(16,185,129,.3)}
+  .false-ans{background:rgba(248,113,113,.1);color:var(--rose);border:1px solid rgba(248,113,113,.3)}
+
+  /* image placeholders */
+  .fig{background:var(--surface2);border:1px dashed var(--border-strong);border-radius:10px;padding:14px;margin:16px 0;text-align:center}
+  .fig svg{max-width:100%;height:auto}
+  .fig-caption{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:8px}
+
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-strong),transparent);margin:50px 0}
+
+  footer{text-align:center;padding:60px 24px;color:var(--dim);font-size:.85rem;border-top:1px solid var(--border);margin-top:60px;position:relative;z-index:1}
+  footer strong{color:var(--cyan)}
+
+  #top-btn{position:fixed;bottom:28px;left:28px;width:46px;height:46px;background:var(--surface);border:1px solid var(--border-strong);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--accent);z-index:50;opacity:0;transition:all .3s;text-decoration:none;font-size:1.2rem}
+  body[data-lang="en"] #top-btn{left:auto;right:28px}
+  #top-btn.show{opacity:1}
+  #top-btn:hover{border-color:var(--accent);transform:translateY(-3px)}
+
+  @keyframes fade-up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .hero > *{animation:fade-up .7s ease both}
+  .hero-badge{animation-delay:.05s}.hero h1{animation-delay:.15s}.hero-sub{animation-delay:.25s}
+  .hero-eq{animation-delay:.35s}.hero-stats{animation-delay:.45s}.toc{animation-delay:.55s}
+
+  @media (max-width:600px){
+    .hero{padding:90px 16px 40px}
+    .wrap{padding:0 16px}
+    .chapter h2{font-size:1.4rem}
+    .card{padding:20px 18px}
+    .hero-stats{gap:24px}
+  }
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+
+  /* ===== Added scroll & hover animations ===== */
+  .reveal{opacity:0;transform:translate3d(0,24px,0);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);will-change:opacity,transform}
+  .reveal.in{opacity:1;transform:translate3d(0,0,0);will-change:auto}
+  .reveal.delay-1{transition-delay:.08s}
+  .reveal.delay-2{transition-delay:.16s}
+  .reveal.delay-3{transition-delay:.24s}
+  .reveal.delay-4{transition-delay:.32s}
+
+  /* Skip offscreen heavy sections from layout/paint work */
+  .chapter{content-visibility:auto;contain-intrinsic-size:1px 1200px}
+
+  @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  @keyframes glowPulse{0%,100%{box-shadow:0 0 0 0 rgba(79,156,240,.0)}50%{box-shadow:0 0 28px 4px rgba(79,156,240,.25)}}
+  @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+  @keyframes shootingStar{
+    0%{transform:translate3d(0,0,0) rotate(-18deg);opacity:0}
+    10%{opacity:1}
+    100%{transform:translate3d(-120vw,40vh,0) rotate(-18deg);opacity:0}
+  }
+  .shooting{position:fixed;top:-2px;right:-10vw;width:140px;height:2px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff,rgba(255,255,255,0));filter:drop-shadow(0 0 6px #9cc7ff);pointer-events:none;z-index:1;animation:shootingStar 2.4s ease-in forwards}
+
+  .card{transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s ease,border-color .3s ease;transform:translateZ(0)}
+  .card:hover{transform:translate3d(0,-4px,0) scale(1.01);border-color:var(--accent);box-shadow:0 18px 48px -20px rgba(79,156,240,.45)}
+
+  .chapter h2{position:relative;overflow:hidden}
+  .chapter h2::after{content:"";position:absolute;inset-inline-start:0;bottom:-6px;width:64px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--cyan),var(--violet));background-size:200% 100%;animation:shimmer 4s linear infinite}
+
+  /* magnetic glow on hero stats */
+  .hero-stats > *{transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+  .hero-stats > *:hover{transform:translateY(-6px) scale(1.04);animation:glowPulse 2.2s ease-in-out infinite}
+
+  /* progress bar polish */
+  #progress{transition:width .15s linear;background:linear-gradient(90deg,var(--accent),var(--cyan),var(--violet));background-size:200% 100%;animation:shimmer 3s linear infinite}
+
+  /* gentle float for headings/icons marked .float */
+  .float{animation:floatY 5s ease-in-out infinite}
+
+  /* Low-end / touch / reduced-motion: kill heavy effects */
+  .lowfx .star{animation:none!important;opacity:.5}
+  .lowfx .shooting{display:none!important}
+  .lowfx .chapter h2::after{animation:none!important}
+  .lowfx #progress{animation:none!important;background:var(--accent)}
+  .lowfx .card:hover{transform:translateZ(0)!important;box-shadow:none}
+  .lowfx .hero-stats > *:hover{animation:none!important}
+  .lowfx #stars{background:radial-gradient(ellipse at 30% 20%,#0d1a3a 0%,#070b18 60%)}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="stars"></div>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="brand">⚛ PHYS102 · 2026</div>
+  <div class="lang-switch" role="tablist" aria-label="Language">
+    <button data-lang-btn="ar" class="active" aria-label="العربية">عربي</button>
+    <button data-lang-btn="en" aria-label="English">EN</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-badge"><span class="ar">⚛ الفيزياء العامة — كورس متكامل</span><span class="en">⚛ General Physics — Unified Course</span></div>
+    <h1>
+      <span class="ar">الكهرومغناطيسية<br>والبصريات</span>
+      <span class="en">Electromagnetism<br>&amp; Optics</span>
+    </h1>
+    <p class="hero-sub">
+      <span class="ar">من الشحنة إلى فاراداي، ومن سنيل إلى أينشتاين — كل المفاهيم مترابطة في رحلة واحدة، مع شرح الجسور التي تربط المغناطيسية بالضوء.</span>
+      <span class="en">From charge to Faraday, from Snell to Einstein — every concept connected in a single journey, with the bridges that bind magnetism to light.</span>
+    </p>
+    <div class="hero-eq">∇·E = ρ/ε₀ &nbsp;|&nbsp; ∇×B = μ₀J + μ₀ε₀ ∂E/∂t &nbsp;|&nbsp; c = 1/√(ε₀μ₀)</div>
+
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-n">2</div><div class="stat-l"><span class="ar">أجزاء</span><span class="en">Parts</span></div></div>
+      <div class="stat"><div class="stat-n">14</div><div class="stat-l"><span class="ar">محاور</span><span class="en">Topics</span></div></div>
+      <div class="stat"><div class="stat-n">28+</div><div class="stat-l"><span class="ar">معادلة</span><span class="en">Equations</span></div></div>
+      <div class="stat"><div class="stat-n">15</div><div class="stat-l"><span class="ar">سؤال</span><span class="en">Quiz Qs</span></div></div>
+    </div>
+
+    <nav class="toc">
+      <a href="#part1"><span class="ar">⚡ الكهرومغناطيسية</span><span class="en">⚡ Electromagnetism</span></a>
+      <a href="#charge"><span class="ar">الشحنة</span><span class="en">Charge</span></a>
+      <a href="#coulomb"><span class="ar">كولوم</span><span class="en">Coulomb</span></a>
+      <a href="#field"><span class="ar">المجال E</span><span class="en">E Field</span></a>
+      <a href="#gauss"><span class="ar">جاوس</span><span class="en">Gauss</span></a>
+      <a href="#magnetic"><span class="ar">المجال B</span><span class="en">B Field</span></a>
+      <a href="#faraday"><span class="ar">فاراداي</span><span class="en">Faraday</span></a>
+      <a href="#bridge"><span class="ar">🌉 الجسر</span><span class="en">🌉 The Bridge</span></a>
+      <a href="#part2"><span class="ar">🔭 البصريات</span><span class="en">🔭 Optics</span></a>
+      <a href="#snell"><span class="ar">سنيل</span><span class="en">Snell</span></a>
+      <a href="#mirrors"><span class="ar">المرايا</span><span class="en">Mirrors</span></a>
+      <a href="#lenses"><span class="ar">العدسات</span><span class="en">Lenses</span></a>
+      <a href="#vision"><span class="ar">أمراض البصر</span><span class="en">Vision</span></a>
+      <a href="#formulas"><span class="ar">📐 المعادلات</span><span class="en">📐 Formulas</span></a>
+      <a href="#quiz"><span class="ar">📝 الأسئلة</span><span class="en">📝 Quiz</span></a>
+    </nav>
+  </div>
+</section>
+
+<main class="wrap">
+
+<!-- ═════════════════════ PART 1: EM ═════════════════════ -->
+<div class="part-header" id="part1">
+  <div class="part-eyebrow"><span class="ar">الجزء الأول</span><span class="en">Part One</span></div>
+  <h2 class="part-title"><span class="ar">الكهرومغناطيسية</span><span class="en">Electromagnetism</span></h2>
+  <p class="part-sub">
+    <span class="ar">الشحنة هي اللبنة الأولى. كل ما يلي — كولوم، المجال، جاوس، المغناطيسية، فاراداي — يبني على هذه الفكرة الواحدة.</span>
+    <span class="en">Charge is the first building block. Everything that follows — Coulomb, fields, Gauss, magnetism, Faraday — builds on this single idea.</span>
+  </p>
+</div>
+
+<!-- 1. CHARGE -->
+<section class="chapter" id="charge">
+  <div class="chapter-header">
+    <span class="chapter-num"><span class="ar">المحور 01</span><span class="en">Topic 01</span></span>
+    <h2><span class="ar">الشحنة الكهربية</span><span class="en">Electric Charge</span></h2>
+  </div>
+  <div class="card">
+    <p>
+      <span class="ar">كل مادة تمتلك خاصية أساسية تُسمى الشحنة الكهربية — كما تمتلك الكتلة. الشحنة هي المفتاح الذي يفتح كل أبواب هذا الكورس.</span>
+      <span class="en">Every material has a fundamental property called electric charge — just like mass. Charge is the key that opens every door in this course.</span>
+    </p>
+    <div class="two-col" style="margin-top:14px">
+      <div class="formula">
+        <div class="label"><span class="ar">نوعان فقط</span><span class="en">Two Types</span></div>
+        <div class="eq">+ / −</div>
+        <div class="desc"><span class="ar">نفس الإشارة تنافر · مختلفة تتجاذب</span><span class="en">Same repels · opposite attracts</span></div>
+      </div>
+      <div class="formula">
+        <div class="label"><span class="ar">حفظ الشحنة</span><span class="en">Conservation</span></div>
+        <div class="eq">Σq = const</div>
+        <div class="desc"><span class="ar">لا تُخلق ولا تفنى — تنتقل فقط</span><span class="en">Neither created nor destroyed</span></div>
+      </div>
+      <div class="formula">
+        <div class="label"><span class="ar">تكميم الشحنة</span><span class="en">Quantization</span></div>
+        <div class="eq">q = ±n·e</div>
+        <div class="desc">e = 1.6×10⁻¹⁹ C</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. COULOMB -->
+<section class="chapter" id="coulomb">
+  <div class="chapter-header">
+    <span class="chapter-num"><span class="ar">المحور 02</span><span class="en">Topic 02</span></span>
+    <h2><span class="ar">قانون كولوم</span><span class="en">Coulomb's Law</span></h2>
+  </div>
+  <div class="card">
+    <p>
+      <span class="ar">شحنتان نقطيتان تفصلهما مسافة r — ما القوة المتبادلة بينهما؟ كولوم أعطانا الإجابة.</span>
+      <span class="en">Two point charges separated by distance r — what is the mutual force? Coulomb gave us the answer.</span>
+    </p>
+    <div class="eq-block">
+      <div class="eq-label"><span class="ar">قانون كولوم</span><span class="en">Coulomb's Law</span></div>
+      \[ F = \frac{1}{4\pi\varepsilon_0} \cdot \frac{|q_1||q_2|}{r^2} \qquad k = 9\times10^9 \,\text{N·m}^2/\text{C}^2 \]
+    </div>
+    <div class="insight">
+      <div class="insight-icon">💡</div>
+      <div>
+        <span class="ar"><strong>نتيجة مذهلة:</strong> القوة الكهربية بين الإلكترون والبروتون في ذرة الهيدروجين أكبر من الجاذبية بينهما بـ <strong style="color:var(--rose)">10³⁹ مرة</strong>!</span>
+        <span class="en"><strong>Astonishing:</strong> the electric force between the electron and proton in hydrogen is <strong style="color:var(--rose)">10³⁹ times</strong> stronger than gravity between them.</span>
+      </div>
+    </div>
+    <h4><span class="ar">مبدأ التراكب (Superposition)</span><span class="en">Superposition Principle</span></h4>
+    <p>
+      <span class="ar">عند وجود عدة شحنات، القوة الكلية على شحنة ما هي المجموع <em>المتجهي</em> لجميع القوى الأخرى.</span>
+      <span class="en">With multiple charges, the total force on any charge is the <em>vector sum</em> of all other forces acting on it.</span>
+    </p>
+    <div class="eq-block">\[ \vec{F}_1 = \vec{F}_{12} + \vec{F}_{13} + \vec{F}_{14} + \cdots \]</div>
+  </div>
+</section>
+
+<!-- 3. E FIELD -->
+<section class="chapter" id="field">
+  <div class="chapter-header">
+    <span class="chapter-num"><span class="ar">المحور 03</span><span class="en">Topic 03</span></span>
+    <h2><span class="ar">المجال الكهربي E</span><span class="en">Electric Field E</span></h2>
+  </div>
+  <div class="card">
+    <p>
+      <span class="ar">بدلاً من القول إن الشحنات تتأثر "عبر الفراغ مباشرةً"، نقول: كل شحنة تنشئ <strong>مجالاً</strong> حولها يؤثر على أي شحنة تدخل فيه.</span>
+      <span class="en">Rather than saying charges act "across empty space," we say each charge creates a <strong>field</strong> that acts on any charge entering it.</span>
+    </p>
+    <div class="formula-grid">
+      <div class="formula">
+        <div class="label"><span class="ar">تعريف المجال</span><span class="en">Definition</span></div>
+        <div class="eq">E = F / q₀</div>
+        <div class="desc">N/C</div>
+      </div>
+      <div class="formula">
+        <div class="label"><span class="ar">لشحنة نقطية</span><span class="en">Point Charge</span></div>
+        <div class="eq">E = k·|q|/r²</div>
+        <div class="desc"><span class="ar">من + للخارج · نحو − للداخل</span><span class="en">Outward from +, inward to −</span></div>
+      </div>
+      <div class="formula">
+        <div class="label"><span class="ar">الثنائي الكهربي</span><span class="en">Dipole (axis)</span></div>
+        <div class="eq">E = (1/2πε₀)·p/z³</div>
+        <div class="desc">p = qd</div>
+      </div>
+    </div>
+
+    <!-- Image placeholder: field lines -->
+    <div class="fig">
+      <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#22d3ee"/>
+          </marker>
+        </defs>
+        <g stroke="#22d3ee" stroke-width="1.2" fill="none" marker-end="url(#arr)" opacity=".8">
+          <path d="M130 100 Q 200 30 270 100"/>
+          <path d="M130 100 Q 200 60 270 100"/>
+          <path d="M130 100 L 270 100"/>
+          <path d="M130 100 Q 200 140 270 100"/>
+          <path d="M130 100 Q 200 170 270 100"/>
+        </g>
+        <circle cx="130" cy="100" r="14" fill="rgba(59,130,246,.25)" stroke="#3b82f6"/>
+        <text x="130" y="106" text-anchor="middle" fill="#3b82f6" font-size="16" font-weight="700">+</text>
+        <circle cx="270" cy="100" r="14" fill="rgba(244,63,94,.25)" stroke="#f43f5e"/>
+        <text x="270" y="106" text-anchor="middle" fill="#f43f5e" font-size="18" font-weight="700">−</text>
+      </svg>
+      <div class="fig-caption"><span class="ar">شكل: خطوط المجال للثنائي الكهربي</span><span class="en">Fig: Electric dipole field lines</span></div>
+    </div>
+  </div>
+
+  <!-- 4. FIELD LINES -->
+  <div class="card" id="fieldlines">
+    <h3><span class="ar">قواعد خطوط المجال</span><span class="en">Field Line Rules</span></h3>
+    <div class="rules-list">
+      <div class="rule-item"><div class="rule-num">01</div><div class="rule-text"><span class="ar"><strong>المصدر والمصب:</strong> تبدأ من الموجبة وتنتهي عند السالبة.</span><span class="en"><strong>Source &amp; sink:</strong> begin at + and end at −.</span></div></div>
+      <div class="rule-item"><div class="rule-num">02</div><div class="rule-text"><span class="ar"><strong>الاتجاه:</strong> مماس للخط عند كل نقطة.</span><span class="en"><strong>Direction:</strong> tangent to the line at every point.</span></div></div>
+      <div class="rule-item"><div class="rule-num">03</div><div class="rule-text"><span class="ar"><strong>الكثافة = الشدة:</strong> كلما تقاربت الخطوط زادت شدة المجال.</span><span class="en"><strong>Density = strength:</strong> closer lines mean stronger field.</span></div></div>
+      <div class="rule-item"><div class="rule-num">04</div><div class="rule-text"><span class="ar"><strong>لا تتقاطع أبداً:</strong> وإلا سيكون للمجال اتجاهان في نقطة واحدة.</span><span class="en"><strong>Never cross:</strong> otherwise the field would have two directions at one point.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. GAUSS -->
+<section class="chapter" id="gauss">
+  <div class="chapter-header">
+    <span class="chapter-num"><span class="ar">المحور 04</span><span class="en">Topic 04</span></span>
+    <h2><span class="ar">قانون جاوس</span><span class="en">Gauss's Law</span></h2>
+  </div>
+  <div class="card">
+    <p>
+      <span class="ar">أعظم أداة لحساب المجالات في الأنظمة المتماثلة. يربط بين الفيض عبر سطح مغلق والشحنات المحاطة به.</span>
+      <span class="en">The most powerful tool for symmetric systems. It links the flux through a closed surface to the enclosed charge.</span>
+    </p>
+    <div class="eq-block">
+      <div class="eq-label"><span class="ar">الفيض / قانون جاوس</span><span class="en">Flux &amp; Gauss</span></div>
+      \[ \Phi = \oint \vec{E}\cdot d\vec{A} = \frac{q_{\text{enc}}}{\varepsilon_0} \]
+    </div>
+
+    <h4><span class="ar">تطبيقات جاوس — الأهم في الامتحان</span><span class="en">Gauss Applications — Exam Essentials</span></h4>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th><span class="ar">التوزيع</span><span class="en">Distribution</span></th>
+        <th><span class="ar">المجال خارجه</span><span class="en">Outside</span></th>
+        <th><span class="ar">المجال داخله</span><span class="en">Inside</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td><span class="ar">خيط طويل (λ)</span><span class="en">Long wire (λ)</span></td><td>\(E=\dfrac{\lambda}{2\pi\varepsilon_0 r}\)</td><td>—</td></tr>
+        <tr><td><span class="ar">صفيحة لانهائية (σ)</span><span class="en">Infinite sheet (σ)</span></td><td>\(E=\dfrac{\sigma}{2\varepsilon_0}\)</td><td>—</td></tr>
+        <tr><td><span class="ar">قشرة كروية</span><span class="en">Spherical shell</span></td><td>\(E=\dfrac{q}{4\pi\varepsilon_0 r^2}\)</td><td style="color:var(--rose)">E = 0</td></tr>
+        <tr><td><span class="ar">كرة صلبة مشحونة</span><span class="en">Solid sphere</span></td><td>\(\dfrac{q}{4\pi\varepsilon_0 r^2}\)</td><td>\(\dfrac{q\,r}{4\pi\varepsilon_0 R^3}\)</td></tr>
+        <tr><td><span class="ar">موصل</span><span class="en">Conductor</span></td><td>\(E=\dfrac{\sigma}{\varepsilon_0}\)</td><td style="color:var(--rose)">E = 0</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- 6. MAGNETIC -->
+<section class="chapter" id="magnetic">
+  <div class="chapter-header">
+    <span class="chapter-num"><span class="ar">المحور 05</span><span class="en">Topic 05</span></span>
+    <h2><span class="ar">المجال المغناطيسي B</span><span class="en">Magnetic Field B</span></h2>
+  </div>
+  <div class="card">
+    <p>
+      <span class="ar">الشحنة الساكنة تُنشئ مجالاً كهربياً، أما الشحنة المتحركة (تيار) فتنشئ <strong>إضافةً لذلك</strong> مجالاً مغناطيسياً.</span>
+      <span class="en">A static charge creates an electric field; a moving charge (current) <strong>also</strong> creates a magnetic field.</span>
+    </p>
+    <div class="eq-block">
+      <div class="eq-label"><span class="ar">قوة لورنتز</span><span class="en">Lorentz Force</span></div>
+      \[ \vec{F}_B = q\vec{v}\times\vec{B} \qquad F_B = |q|vB\sin\phi \]
+    </div>
+    <div class="rules-list">
+      <div class="rule-item"><div class="rule-num">A</div><div class="rule-text"><span class="ar"><strong>لا أثر على الساكن:</strong> الشحنة يجب أن تتحرك.</span><span class="en"><strong>No effect on rest:</strong> the charge must be moving.</span></div></div>
+      <div class="rule-item"><div class="rule-num">B</div><div class="rule-text"><span class="ar"><strong>أقصى قوة:</strong> v ⊥ B، وصفر عندما v ∥ B.</span><span class="en"><strong>Max force:</strong> v ⊥ B; zero when v ∥ B.</span></div></div>
+      <div class="rule-item"><div class="rule-num">C</div><div class="rule-text"><span class="ar"><strong>عمودية على الحركة:</strong> تُحرف الجسيم دون تغيير سرعته.</span><span class="en"><strong>Perpendicular to motion:</strong> deflects without changing speed.</span></div></div>
+      <div class="rule-item"><div class="rule-num">D</div><div class="rule-text"><span class="ar"><strong>لا شغل:</strong> القوة عمودية على الإزاحة دائماً.</span><span class="en"><strong>Zero work:</strong> force is always ⊥ to displacement.</span></div></div>
+    </div>
+
+    <!-- Right hand rule placeholder -->
+    <div class="fig">
+      <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+        <defs><marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#f59e0b"/></marker></defs>
+        <line x1="60" y1="80" x2="180" y2="80" stroke="#22d3ee" stroke-width="2" marker-end="url(#ar2)"/>
+        <text x="100" y="70" fill="#22d3ee" font-size="14">v</text>
+        <line x1="220" y1="20" x2="220" y2="140" stroke="#8b5cf6" stroke-width="2" marker-end="url(#ar2)"/>
+        <text x="230" y="40" fill="#8b5cf6" font-size="14">B</text>
+        <line x1="290" y1="80" x2="370" y2="80" stroke="#f59e0b" stroke-width="3" marker-end="url(#ar2)"/>
+        <text x="320" y="70" fill="#f59e0b" font-size="14">F = qv×B</text>
+      </svg>
+      <div class="fig-caption"><span class="ar">شكل: قاعدة اليد اليمنى — اتجاه F بالنسبة لـ v و B</span><span class="en">Fig: Right-hand rule — direction of F relative to v and B</span></div>
+    </div>
+  </div>
+
+  <!-- cyclotron -->
+  <div class="card" id="cyclotron">
+    <h3><span class="ar">الحركة الدائرية في المجال المغناطيسي</span><span class="en">Circular Motion in B</span></h3>
+    <div class="eq-block">
+      \[ r = \frac{mv}{|q|B} \qquad \omega = \frac{|q|B}{m} \qquad T = \frac{2\pi m}{|q|B} \]
+    </div>
+    <div class="insight">
+      <div class="insight-icon">🔑</div>
+      <div>
+        <span class="ar"><strong>الفكرة المفتاحية:</strong> زمن الدورة T لا يعتمد على السرعة — أيًّا كانت سرعة الجسيم، دورته الكاملة تستغرق نفس الزمن. هذا ما يُشغّل السيكلوترون.</span>
+        <span class="en"><strong>Key idea:</strong> the period T does not depend on speed — whatever the particle's speed, one full revolution takes the same time. This is what makes the cyclotron work.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- wire -->
+  <div class="card" id="wire">
+    <h3><span class="ar">القوة على سلك حامل تيار</span><span class="en">Force on a Current-Carrying Wire</span></h3>
+    <div class="eq-block">\[ \vec{F}_B = i\vec{L}\times\vec{B} \qquad F = iLB\sin\phi \]</div>
+    <div class="eq-block">\[ \vec{F}_B = i\int d\vec{L}\times\vec{B} \quad \text{(curved wire)} \]</div>
+  </div>
+</section>
+
+<!-- 7. FARADAY -->
+<section class="chapter" id="faraday">
+  <div class="chapter-header">
+    <span class="chapter-num"><span class="ar">المحور 06</span><span class="en">Topic 06</span></span>
+    <h2><span class="ar">قانون فاراداي — الحث الكهرومغناطيسي</span><span class="en">Faraday's Law — Induction</span></h2>
+  </div>
+  <div class="card">
+    <p>
+      <span class="ar">الكشف الأعظم: مجال مغناطيسي متغيّر يُنتج قوة دافعة كهربية. هذا أساس المولّدات والمحوّلات وكل الكهرباء الحديثة.</span>
+      <span class="en">The greatest discovery: a changing magnetic field produces an EMF. This is the basis of generators, transformers, and all modern electricity.</span>
+    </p>
+    <div class="eq-block">
+      <div class="eq-label"><span class="ar">قانون فاراداي / الفيض</span><span class="en">Faraday / Flux</span></div>
+      \[ \mathcal{E} = -N\frac{d\Phi_B}{dt} \qquad \Phi_B = BA\cos\theta \]
+    </div>
+    <div class="insight">
+      <div class="insight-icon">🔁</div>
+      <div>
+        <span class="ar">يمكن تغيير الفيض بثلاث طرق: تغيير <strong>B</strong>، أو <strong>A</strong>، أو <strong>θ</strong>. المولّدات تستخدم الطريقة الثالثة (دوران حلقة).</span>
+        <span class="en">Flux can change three ways: changing <strong>B</strong>, <strong>A</strong>, or <strong>θ</strong>. Generators use the third (rotating a coil).</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ THE BRIDGE — links EM ↔ Optics ═══════════ -->
+<div class="divider"></div>
+<section class="chapter" id="bridge">
+  <div class="chapter-header">
+    <span class="chapter-num">🌉 <span class="ar">الجسر</span><span class="en">Bridge</span></span>
+    <h2><span class="ar">من الكهرومغناطيسية إلى الضوء</span><span class="en">From Electromagnetism to Light</span></h2>
+  </div>
+
+  <div class="bridge">
+    <div class="bridge-label"><span class="ar">الرابط الأكبر</span><span class="en">The Grand Link</span></div>
+    <h4><span class="ar">ماكسويل يُوحّد عالمَي الكهرباء والضوء</span><span class="en">Maxwell unifies electricity and light</span></h4>
+    <p>
+      <span class="ar">كل ما تعلمناه أعلاه — قانون جاوس، فاراداي، أمبير — لخّصه ماكسويل عام 1873 في أربع معادلات. ومن حلّها اكتشف موجة تنتشر بسرعة:</span>
+      <span class="en">Everything above — Gauss, Faraday, Ampère — Maxwell summarized in 1873 into four equations. Solving them revealed a wave propagating at speed:</span>
+    </p>
+    <div class="eq-block" style="margin:14px 0">\[ c = \frac{1}{\sqrt{\varepsilon_0 \mu_0}} = 3\times10^8 \text{ m/s} \]</div>
+    <p>
+      <span class="ar"><strong>المفاجأة:</strong> هذه بالضبط هي سرعة الضوء المقاسة تجريبياً! إذن <strong>الضوء موجة كهرومغناطيسية</strong>: مجال E متذبذب يولّد مجال B متذبذب، وهكذا إلى ما لا نهاية في الفراغ.</span>
+      <span class="en"><strong>The surprise:</strong> this is exactly the experimentally measured speed of light. Therefore <strong>light is an electromagnetic wave</strong>: an oscillating E field generates an oscillating B field, propagating endlessly through vacuum.</span>
+    </p>
+  </div>
+
+  <div class="bridge">
+    <div class="bridge-label"><span class="ar">رابط 2</span><span class="en">Link 2</span></div>
+    <h4><span class="ar">الفوتون: نهاية ميكانيكا فاراداي وبداية الكم</span><span class="en">The photon: end of Faraday-mechanics, start of quantum</span></h4>
+    <p>
+      <span class="ar">إذا كان الضوء موجة EM، فلماذا يتصرف كجسيم في التأثير الكهروضوئي؟ أينشتاين (1905) أجاب: الموجة EM تحمل طاقتها في حزم منفصلة تُدعى فوتونات بطاقة <strong>E = hf</strong>. هذا الرابط نفسه يربط <em>التردد الكهرومغناطيسي</em> بـ<em>الطاقة الضوئية</em>.</span>
+      <span class="en">If light is an EM wave, why does it behave like a particle in the photoelectric effect? Einstein (1905) answered: the EM wave carries its energy in discrete packets — photons — with energy <strong>E = hf</strong>. This same link ties <em>EM frequency</em> to <em>optical energy</em>.</span>
+    </p>
+  </div>
+
+  <h3 style="margin:30px 0 16px;text-align:center"><span class="ar">المخطط الكامل للترابط</span><span class="en">Complete Connection Map</span></h3>
+  <div class="flow">
+    <div class="flow-node active"><span class="ar">شحنة ساكنة</span><span class="en">Static charge</span></div>
+    <div class="flow-arrow"><span><span class="ar">تنشئ</span><span class="en">creates</span></span></div>
+    <div class="flow-node"><span class="ar">مجال كهربي E (كولوم / جاوس)</span><span class="en">Electric field E (Coulomb/Gauss)</span></div>
+    <div class="flow-arrow"><span><span class="ar">شحنة متحركة</span><span class="en">moving charge</span></span></div>
+    <div class="flow-node"><span class="ar">مجال مغناطيسي B (لورنتز)</span><span class="en">Magnetic field B (Lorentz)</span></div>
+    <div class="flow-arrow"><span><span class="ar">B متغير</span><span class="en">changing B</span></span></div>
+    <div class="flow-node"><span class="ar">قوة دافعة (فاراداي)</span><span class="en">EMF (Faraday)</span></div>
+    <div class="flow-arrow"><span><span class="ar">ماكسويل</span><span class="en">Maxwell</span></span></div>
+    <div class="flow-node violet"><span class="ar">موجة كهرومغناطيسية ⇨ الضوء</span><span class="en">EM wave ⇨ Light</span></div>
+    <div class="flow-arrow"><span><span class="ar">أينشتاين</span><span class="en">Einstein</span></span></div>
+    <div class="flow-node violet"><span class="ar">الفوتون E=hf ⇨ بصريات</span><span class="en">Photon E=hf ⇨ Optics</span></div>
+  </div>
+</section>
+
+<!-- ═════════════════════ PART 2: OPTICS ═════════════════════ -->
+<div class="part-header" id="part2">
+  <div class="part-eyebrow"><span class="ar">الجزء الثاني</span><span class="en">Part Two</span></div>
+  <h2 class="part-title"><span class="ar">الفيزياء البصرية</span><span class="en">Optics</span></h2>
+  <p class="part-sub">
+    <span class="ar">الآن وقد عرفنا أن الضوء موجة كهرومغناطيسية وفوتون في آنٍ معاً، نتتبع سلوكه: ينعكس، ينكسر، يتشتت، يكوّن صوراً.</span>
+    <span class="en">Now that we know light is both EM wave and photon, we trace its behavior: reflection, refraction, dispersion, and image formation.</span>
+  </p>
+</div>
+
+<!-- Optics intro -->
+<section class="chapter">
+  <div class="chapter-header">
+    <span class="chapter-num"><span class="ar">المحور 07</span><span class="en">Topic 07</span></span>
+    <h2><span class="ar">مقدمة وطبيعة الضوء</span><span class="en">Intro &amp; Nature of Light</span></h2>
+  </div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <h4><span class="ar">البصريات الهندسية</span><span class="en">Geometrical Optics</span> <span class="tag tag-blue">Rays</span></h4>
+        <p><span class="ar">تعامل الضوء كأشعة مستقيمة — تفسر الانعكاس والانكسار.</span><span class="en">Treats light as straight rays — explains reflection &amp; refraction.</span></p>
+      </div>
+      <div>
+        <h4><span class="ar">البصريات الفيزيائية</span><span class="en">Physical Optics</span> <span class="tag tag-gold">Waves</span></h4>
+        <p><span class="ar">تشمل الحيود، التداخل، والاستقطاب — ظواهر لا تفسّرها الأشعة.</span><span class="en">Includes diffraction, interference, polarization — phenomena rays can't explain.</span></p>
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:14px">
+      <strong><span class="ar">تطبيقات:</span><span class="en">Applications:</span></strong>
+      <span class="ar"> فلك · طب · تصوير · مجاهر · تلسكوبات · ليزر · ألياف بصرية</span>
+      <span class="en"> astronomy · medicine · imaging · microscopes · telescopes · lasers · optical fiber</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="ar">الضوء ومكوناته</span><span class="en">Light Components</span></h3>
+    <div class="formula-grid">
+      <div class="formula"><div class="label"><span class="ar">المرئي</span><span class="en">Visible</span></div><div class="eq">0.4 – 0.8 μm</div></div>
+      <div class="formula"><div class="label">UV</div><div class="eq">&lt; 0.4 μm</div></div>
+      <div class="formula"><div class="label">IR</div><div class="eq">&gt; 0.8 μm</div></div>
+      <div class="formula"><div class="label"><span class="ar">سرعة الضوء</span><span class="en">Speed of light</span></div><div class="eq">c = 3×10⁸ m/s</div></div>
+    </div>
+    <div class="highlight">
+      <span class="ar"><strong>الطبيعة المزدوجة:</strong> الضوء موجة في بعض المواقف وجسيم (فوتون) في أخرى — تماماً كما رأينا في "الجسر" أعلاه.</span>
+      <span class="en"><strong>Dual nature:</strong> light behaves as a wave in some contexts, a particle (photon) in others — exactly as the "Bridge" above showed.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="ar">الجدول الزمني للنظريات</span><span class="en">Historical Timeline</span></h3>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th><span class="ar">العالم</span><span class="en">Scientist</span></th>
+        <th><span class="ar">الفترة</span><span class="en">Era</span></th>
+        <th><span class="ar">الإسهام</span><span class="en">Contribution</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td><strong><span class="ar">نيوتن</span><span class="en">Newton</span></strong></td><td>17c</td><td><span class="ar">نظرية الجسيمات</span><span class="en">Corpuscular theory</span></td></tr>
+        <tr><td><strong><span class="ar">هيغنز</span><span class="en">Huygens</span></strong></td><td>17c</td><td><span class="ar">النظرية الموجية ومبدأ الموجيلات</span><span class="en">Wave theory + Huygens principle</span></td></tr>
+        <tr><td><strong><span class="ar">يونغ</span><span class="en">Young</span></strong></td><td>1801</td><td><span class="ar">تجربة الشقين — موجية الضوء</span><span class="en">Double-slit — wave nature</span></td></tr>
+        <tr><td><strong><span class="ar">ماكسويل</span><span class="en">Maxwell</span></strong></td><td>1873</td><td><span class="ar">الضوء = موجة كهرومغناطيسية</span><span class="en">Light = EM wave</span></td></tr>
+        <tr><td><strong><span class="ar">هرتز</span><span class="en">Hertz</span></strong></td><td>1887</td><td><span class="ar">إثبات تجريبي للموجات EM</span><span class="en">Experimental proof of EM waves</span></td></tr>
+        <tr><td><strong><span class="ar">بلانك</span><span class="en">Planck</span></strong></td><td>1900</td><td><span class="ar">التكميم</span><span class="en">Quantization</span></td></tr>
+        <tr><td><strong><span class="ar">أينشتاين</span><span class="en">Einstein</span></strong></td><td>1905</td><td>E = hf · <span class="ar">الفوتون</span><span class="en">Photon</span></td></tr>
+        <tr><td><strong><span class="ar">دي بروي</span><span class="en">de Broglie</span></strong></td><td>1924</td><td>λ = h/mv</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3><span class="ar">معادلات الطبيعة المزدوجة</span><span class="en">Dual-Nature Equations</span></h3>
+    <div class="formula-grid">
+      <div class="formula"><div class="label"><span class="ar">طاقة الفوتون</span><span class="en">Photon energy</span></div><div class="eq">E = hf = hc/λ</div></div>
+      <div class="formula"><div class="label"><span class="ar">كمية حركة</span><span class="en">Momentum</span></div><div class="eq">p = E/c = h/λ</div></div>
+      <div class="formula"><div class="label"><span class="ar">دي بروي</span><span class="en">de Broglie</span></div><div class="eq">λ = h/mv</div></div>
+      <div class="formula"><div class="label"><span class="ar">ثابت بلانك</span><span class="en">Planck const</span></div><div class="eq">h = 6.63×10⁻³⁴ J·s</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Snell -->
+<section class="chapter" id="snell">
+  <div class="chapter-header">
+    <span class="chapter-num"><span class="ar">المحور 08</span><span class="en">Topic 08</span></span>
+    <h2><span class="ar">الانعكاس والانكسار وقانون سنيل</span><span class="en">Reflection, Refraction &amp; Snell's Law</span></h2>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <h3><span class="ar">قانون الانعكاس</span><span class="en">Law of Reflection</span></h3>
+      <div class="formula"><div class="eq">θᵢ = θᵣ</div></div>
+      <p><span class="ar">الشعاع الساقط والمنعكس والعمود — في نفس المستوى.</span><span class="en">Incident, reflected, and normal — all in the same plane.</span></p>
+    </div>
+    <div class="card">
+      <h3><span class="ar">معامل الانكسار</span><span class="en">Refractive Index</span></h3>
+      <div class="formula"><div class="eq">n = c / v</div></div>
+      <p><span class="ar">كلما زاد n قلّت سرعة الضوء، وانحنى أكثر نحو العمود.</span><span class="en">Larger n → slower light → bends more toward the normal.</span></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="ar">قانون سنيل</span><span class="en">Snell's Law</span></h3>
+    <div class="eq-block">\[ n_1 \sin\theta_1 = n_2 \sin\theta_2 \]</div>
+    <ul>
+      <li><span class="ar">من <strong>أقل → أعلى</strong> n: الشعاع يقترب من العمود (θ₂ &lt; θ₁).</span><span class="en">From <strong>lower → higher</strong> n: bends toward the normal.</span></li>
+      <li><span class="ar">من <strong>أعلى → أقل</strong> n: الشعاع يبتعد عن العمود (θ₂ &gt; θ₁).</span><span class="en">From <strong>higher → lower</strong> n: bends away from the normal.</span></li>
+    </ul>
+    <div class="info-box">
+      <span class="ar"><strong>عند الانتقال:</strong> التردد ثابت · الطول الموجي يتغير → n₁λ₁ = n₂λ₂</span>
+      <span class="en"><strong>Crossing media:</strong> frequency constant · wavelength changes → n₁λ₁ = n₂λ₂</span>
+    </div>
+
+    <!-- refraction figure -->
+    <div class="fig">
+      <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="110" width="360" height="110" fill="rgba(79,156,240,.08)"/>
+        <line x1="180" y1="20" x2="180" y2="200" stroke="#54678a" stroke-dasharray="4,4"/>
+        <line x1="60" y1="40" x2="180" y2="110" stroke="#22d3ee" stroke-width="2"/>
+        <line x1="180" y1="110" x2="260" y2="200" stroke="#f59e0b" stroke-width="2"/>
+        <text x="100" y="80" fill="#22d3ee" font-size="13">θ₁</text>
+        <text x="220" y="170" fill="#f59e0b" font-size="13">θ₂</text>
+        <text x="20" y="100" fill="#8aa0c4" font-size="12">n₁</text>
+        <text x="20" y="130" fill="#8aa0c4" font-size="12">n₂</text>
+      </svg>
+      <div class="fig-caption"><span class="ar">شكل: انكسار شعاع — قانون سنيل</span><span class="en">Fig: Ray refraction — Snell's law</span></div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-label"><span class="ar">مثال 1</span><span class="en">Example 1</span></div>
+    <p><span class="ar">ضوء من الهواء إلى زجاج n=1.49 بزاوية 52°. أوجد θ₂.</span><span class="en">Light from air to glass n=1.49 at 52°. Find θ₂.</span></p>
+    <div class="sol">sin θ₂ = sin 52° / 1.49 = 0.529 → θ₂ ≈ <strong style="color:var(--gold)">31.3°</strong></div>
+  </div>
+  <div class="example">
+    <div class="example-label"><span class="ar">مثال 2</span><span class="en">Example 2</span></div>
+    <p><span class="ar">شعاع بزاوية 50° على زجاج n=1.5. الزاوية بين المنعكس والمنكسر؟</span><span class="en">Ray at 50° onto glass n=1.5. Angle between reflected and refracted?</span></p>
+    <div class="sol">θ₂ ≈ 30.7° → angle = (90−30.7) + (90−50) = <strong style="color:var(--gold)">99.3°</strong></div>
+  </div>
+
+  <div class="card">
+    <h3><span class="ar">الزاوية الحرجة والانعكاس الكلي الداخلي</span><span class="en">Critical Angle &amp; Total Internal Reflection</span></h3>
+    <div class="eq-block">\[ \theta_c = \sin^{-1}\!\left(\frac{n_2}{n_1}\right) \quad (n_1 > n_2) \]</div>
+    <h4><span class="ar">تطبيقات</span><span class="en">Applications</span></h4>
+    <ul>
+      <li><span class="ar"><strong>الألياف البصرية:</strong> نقل البيانات بلا فقد للضوء.</span><span class="en"><strong>Optical fibers:</strong> data transmission without light loss.</span></li>
+      <li><span class="ar"><strong>المنظار الطبي (Endoscope):</strong> ضوء في أنابيب منحنية.</span><span class="en"><strong>Endoscopes:</strong> light through curved tubes.</span></li>
+      <li><span class="ar"><strong>النافورات الراقصة:</strong> إضاءة المياه من الداخل.</span><span class="en"><strong>Illuminated fountains.</strong></span></li>
+    </ul>
+    <div class="two-col">
+      <div class="example" style="margin:0">
+        <div class="example-label"><span class="ar">مثال</span><span class="en">Example</span></div>
+        <p><span class="ar">زجاج (1.52) → ماء (1.33):</span><span class="en">Glass (1.52) → water (1.33):</span></p>
+        <div class="sol">θc = sin⁻¹(1.33/1.52) ≈ <strong style="color:var(--gold)">61°</strong></div>
+      </div>
+      <div class="example" style="margin:0">
+        <div class="example-label"><span class="ar">مثال</span><span class="en">Example</span></div>
+        <p><span class="ar">ثلج (1.31) → هواء:</span><span class="en">Ice (1.31) → air:</span></p>
+        <div class="sol">θc = sin⁻¹(1/1.31) ≈ <strong style="color:var(--gold)">49.8°</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Dispersion -->
+<section class="chapter">
+  <div class="chapter-header">
+    <span class="chapter-num"><span class="ar">المحور 09</span><span class="en">Topic 09</span></span>
+    <h2><span class="ar">التشتت — Dispersion</span><span class="en">Dispersion</span></h2>
+  </div>
+  <div class="card">
+    <p>
+      <span class="ar">عند مرور الضوء الأبيض في منشور، يُفرَّق إلى ألوانه لأن معامل الانكسار يختلف مع λ.</span>
+      <span class="en">White light through a prism splits into colors because n varies with λ.</span>
+    </p>
+    <div class="highlight">
+      <span class="ar"><strong>كلما قصُر λ (بنفسجي) → ارتفع n → انحنى أكثر.</strong></span>
+      <span class="en"><strong>Shorter λ (violet) → higher n → bends more.</strong></span>
+      <br>
+      <span style="color:#a78bfa">violet</span> · <span style="color:#60a5fa">blue</span> · green · <span style="color:#facc15">yellow</span> · <span style="color:#fb923c">orange</span> · <span style="color:#f87171">red</span>
+    </div>
+  </div>
+</section>
+
+<!-- Mirrors -->
+<section class="chapter" id="mirrors">
+  <div class="chapter-header">
+    <span class="chapter-num"><span class="ar">المحور 10</span><span class="en">Topic 10</span></span>
+    <h2><span class="ar">المرايا</span><span class="en">Mirrors</span></h2>
+  </div>
+  <div class="card">
+    <h3><span class="ar">المرايا المستوية</span><span class="en">Plane Mirrors</span></h3>
+    <ul>
+      <li><span class="ar">الصورة خلف المرآة بنفس مسافة الجسم أمامها.</span><span class="en">Image behind the mirror at the same distance as object in front.</span></li>
+      <li><span class="ar">الصورة <strong>وهمية · معتدلة · بنفس الحجم</strong>.</span><span class="en"><strong>Virtual · upright · same size</strong>.</span></li>
+    </ul>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3><span class="ar">المرايا المقعرة</span><span class="en">Concave</span> <span class="tag tag-teal">Converging</span></h3>
+      <p><span class="ar">جامعة · f موجب · داخل السطح هو العاكس.</span><span class="en">Converging · +f · reflective inner surface.</span></p>
+      <ul>
+        <li><span class="ar">مصابيح السيارات والمنارات</span><span class="en">Car headlights, lighthouses</span></li>
+        <li><span class="ar">أفران الطاقة الشمسية</span><span class="en">Solar furnaces</span></li>
+        <li><span class="ar">مرايا الحلاقة والتجميل</span><span class="en">Shaving / makeup mirrors</span></li>
+        <li><span class="ar">التلسكوبات والمجاهر</span><span class="en">Telescopes, microscopes</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="ar">المرايا المحدبة</span><span class="en">Convex</span> <span class="tag tag-gold">Diverging</span></h3>
+      <p><span class="ar">مشتتة · f سالب · خارج السطح هو العاكس.</span><span class="en">Diverging · −f · reflective outer surface.</span></p>
+      <ul>
+        <li><span class="ar">مرايا الرؤية الجانبية</span><span class="en">Car side-view mirrors</span></li>
+        <li><span class="ar">مرايا السوبرماركت</span><span class="en">Supermarket security mirrors</span></li>
+        <li><span class="ar">عواكس الإضاءة</span><span class="en">Ceiling reflectors</span></li>
+        <li><span class="ar">استقبال الرادار والتلفزيون</span><span class="en">Radar / TV reception</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="ar">معادلات المرايا والتكبير</span><span class="en">Mirror Equations &amp; Magnification</span></h3>
+    <div class="formula-grid">
+      <div class="formula"><div class="label"><span class="ar">معادلة المرآة</span><span class="en">Mirror eq.</span></div><div class="eq">1/s' + 1/s = 1/f = 2/r</div></div>
+      <div class="formula"><div class="label"><span class="ar">التكبير</span><span class="en">Magnification</span></div><div class="eq">m = −s'/s = h'/h</div></div>
+      <div class="formula"><div class="label"><span class="ar">البعد البؤري</span><span class="en">Focal length</span></div><div class="eq">f = r/2</div></div>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th><span class="ar">الكمية</span><span class="en">Quantity</span></th>
+        <th><span class="ar">موجب (+)</span><span class="en">Positive (+)</span></th>
+        <th><span class="ar">سالب (−)</span><span class="en">Negative (−)</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td>s</td><td><span class="ar">أمام (حقيقي)</span><span class="en">In front (real)</span></td><td><span class="ar">خلف (وهمي)</span><span class="en">Behind (virtual)</span></td></tr>
+        <tr><td>s'</td><td><span class="ar">أمام (حقيقية)</span><span class="en">In front (real)</span></td><td><span class="ar">خلف (وهمية)</span><span class="en">Behind (virtual)</span></td></tr>
+        <tr><td>f</td><td><span class="ar">مقعرة</span><span class="en">Concave</span></td><td><span class="ar">محدبة</span><span class="en">Convex</span></td></tr>
+        <tr><td>h'</td><td><span class="ar">معتدلة</span><span class="en">Upright</span></td><td><span class="ar">مقلوبة</span><span class="en">Inverted</span></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="example">
+    <div class="example-label"><span class="ar">مثال — مرآة محدبة</span><span class="en">Example — Convex</span></div>
+    <p><span class="ar">جسم على 75 سم من مرآة محدبة r=100. الصورة؟</span><span class="en">Object 75 cm from a convex mirror r=100. Image?</span></p>
+    <div class="sol">f = −50, s = −75 → 1/s' = 2/−100 − 1/−75 ≈ −0.00667 → s' = <strong style="color:var(--gold)">−150 cm</strong></div>
+  </div>
+  <div class="example">
+    <div class="example-label"><span class="ar">مثال — مرآة تجميل</span><span class="en">Example — Makeup Mirror</span></div>
+    <p><span class="ar">امرأة على 40 سم، الصورة معتدلة وضعف الحجم. f؟</span><span class="en">Person at 40 cm, image upright and 2× size. Find f.</span></p>
+    <div class="sol">m=+2 → s'=−80 → 1/f = 1/40 − 1/80 = 0.0125 → f = <strong style="color:var(--gold)">80 cm</strong></div>
+  </div>
+</section>
+
+<!-- Lenses -->
+<section class="chapter" id="lenses">
+  <div class="chapter-header">
+    <span class="chapter-num"><span class="ar">المحور 11</span><span class="en">Topic 11</span></span>
+    <h2><span class="ar">العدسات والأجهزة البصرية</span><span class="en">Lenses &amp; Optical Devices</span></h2>
+  </div>
+  <div class="card">
+    <h3><span class="ar">صور العدسة المحدبة حسب موضع الجسم</span><span class="en">Convex Lens Images by Object Position</span></h3>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th><span class="ar">موضع u</span><span class="en">Position u</span></th>
+        <th><span class="ar">نوع الصورة</span><span class="en">Image Type</span></th>
+        <th><span class="ar">موضع v</span><span class="en">Position v</span></th>
+        <th><span class="ar">الاستخدام</span><span class="en">Use</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td>u = ∞</td><td><span class="ar">مقلوبة · حقيقية · مصغّرة</span><span class="en">Inverted · real · reduced</span></td><td>v = f</td><td><span class="ar">تلسكوب</span><span class="en">Telescope</span></td></tr>
+        <tr><td>u &gt; 2f</td><td><span class="ar">مقلوبة · حقيقية · مصغّرة</span><span class="en">Inverted · real · reduced</span></td><td>f &lt; v &lt; 2f</td><td><span class="ar">كاميرا، عين</span><span class="en">Camera, eye</span></td></tr>
+        <tr><td>u = 2f</td><td><span class="ar">مقلوبة · نفس الحجم</span><span class="en">Inverted · same size</span></td><td>v = 2f</td><td><span class="ar">آلة تصوير</span><span class="en">Copier</span></td></tr>
+        <tr><td>f &lt; u &lt; 2f</td><td><span class="ar">مقلوبة · حقيقية · مكبّرة</span><span class="en">Inverted · real · magnified</span></td><td>v &gt; 2f</td><td><span class="ar">جهاز عرض</span><span class="en">Projector</span></td></tr>
+        <tr><td>u = f</td><td><span class="ar">حزمة متوازية</span><span class="en">Parallel beam</span></td><td>v = ∞</td><td><span class="ar">كشاف</span><span class="en">Spotlight</span></td></tr>
+        <tr><td>u &lt; f</td><td><span class="ar">معتدلة · وهمية · مكبّرة</span><span class="en">Upright · virtual · magnified</span></td><td><span class="ar">خلف الجسم</span><span class="en">Behind object</span></td><td><span class="ar">عدسة مكبّرة</span><span class="en">Magnifier</span></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3><span class="ar">المجهر الضوئي</span><span class="en">Optical Microscope</span></h3>
+      <ul>
+        <li><span class="ar">شيئية ببعد بؤري قصير</span><span class="en">Short-f objective</span></li>
+        <li><span class="ar">عينية كعدسة مكبّرة</span><span class="en">Eyepiece as magnifier</span></li>
+        <li><span class="ar">الصورة النهائية: وهمية، معتدلة، مكبّرة جداً</span><span class="en">Final image: virtual, upright, highly magnified</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="ar">المجهر الإلكتروني</span><span class="en">Electron Microscope</span></h3>
+      <ul>
+        <li><span class="ar">تكبير ملايين المرات</span><span class="en">Magnifies millions of times</span></li>
+        <li><span class="ar">يعتمد على طبيعة دي بروي للإلكترون</span><span class="en">Uses de Broglie nature of electrons</span></li>
+        <li><span class="ar">يربط ميكانيكا الكم بالبصريات!</span><span class="en">Links quantum mechanics to optics!</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Vision -->
+<section class="chapter" id="vision">
+  <div class="chapter-header">
+    <span class="chapter-num"><span class="ar">المحور 12</span><span class="en">Topic 12</span></span>
+    <h2><span class="ar">أمراض البصر والزيغ البصري</span><span class="en">Vision Defects &amp; Aberrations</span></h2>
+  </div>
+  <div class="card">
+    <h3><span class="ar">مقارنة أمراض الرؤية</span><span class="en">Vision Defects Comparison</span></h3>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th><span class="ar">المرض</span><span class="en">Defect</span></th>
+        <th><span class="ar">السبب</span><span class="en">Cause</span></th>
+        <th><span class="ar">موضع الصورة</span><span class="en">Image Location</span></th>
+        <th><span class="ar">العلاج</span><span class="en">Correction</span></th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--rose)"><span class="ar">قصر النظر</span><span class="en">Myopia</span></strong></td>
+          <td><span class="ar">مقلة طويلة / قرنية متقوسة</span><span class="en">Long eyeball / curved cornea</span></td>
+          <td><span class="ar">أمام الشبكية</span><span class="en">In front of retina</span></td>
+          <td><span class="ar">عدسة مقعرة (−)</span><span class="en">Concave lens (−)</span></td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--gold)"><span class="ar">بُعد النظر</span><span class="en">Hyperopia</span></strong></td>
+          <td><span class="ar">مقلة قصيرة / قرنية مسطحة</span><span class="en">Short eyeball / flat cornea</span></td>
+          <td><span class="ar">خلف الشبكية</span><span class="en">Behind retina</span></td>
+          <td><span class="ar">عدسة محدبة (+)</span><span class="en">Convex lens (+)</span></td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--teal)"><span class="ar">الاستجماتيزم</span><span class="en">Astigmatism</span></strong></td>
+          <td><span class="ar">قرنية بيضاوية</span><span class="en">Oval cornea</span></td>
+          <td><span class="ar">بؤر متعددة</span><span class="en">Multiple foci</span></td>
+          <td><span class="ar">عدسة أسطوانية</span><span class="en">Cylindrical lens</span></td>
+        </tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3><span class="ar">الزيغ الكروي</span><span class="en">Spherical Aberration</span> <span class="tag tag-blue">Spherical</span></h3>
+      <p><span class="ar">الأشعة من نقطة لا تتقاطع في بؤرة واحدة بسبب الشكل الكروي.</span><span class="en">Rays from one point don't focus at a single point due to spherical shape.</span></p>
+    </div>
+    <div class="card">
+      <h3><span class="ar">الزيغ اللوني</span><span class="en">Chromatic Aberration</span> <span class="tag tag-gold">Chromatic</span></h3>
+      <p><span class="ar">فشل تركيز جميع الألوان في بؤرة واحدة — يرتبط مباشرة بتشتت الضوء.</span><span class="en">Failure to focus all colors at one point — directly tied to dispersion.</span></p>
+      <ul>
+        <li><span class="ar"><strong>أكرومية:</strong> تجمع لونين</span><span class="en"><strong>Achromatic:</strong> combines two colors</span></li>
+        <li><span class="ar"><strong>فوق أكرومية:</strong> ثلاثة ألوان</span><span class="en"><strong>Apochromatic:</strong> three colors</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FORMULAS ═══════════ -->
+<div class="divider" id="formulas"></div>
+<section class="chapter">
+  <div class="chapter-header">
+    <span class="chapter-num"><span class="ar">ملخص</span><span class="en">Summary</span></span>
+    <h2><span class="ar">جدول المعادلات الكامل</span><span class="en">Complete Formula Sheet</span></h2>
+  </div>
+  <div class="cheat-grid">
+    <div class="cheat-item"><div class="cheat-topic">Coulomb</div><div class="cheat-eq">\(F=k\dfrac{q_1q_2}{r^2}\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">E field</div><div class="cheat-eq">\(E=k\dfrac{q}{r^2}\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">Gauss</div><div class="cheat-eq">\(\Phi=\dfrac{q_{\text{enc}}}{\varepsilon_0}\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">Magnetic F</div><div class="cheat-eq">\(F=qvB\sin\phi\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">Cyclotron r</div><div class="cheat-eq">\(r=\dfrac{mv}{qB}\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">Angular ω</div><div class="cheat-eq">\(\omega=\dfrac{qB}{m}\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">Faraday</div><div class="cheat-eq">\(\mathcal{E}=-N\dfrac{d\Phi_B}{dt}\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">Flux B</div><div class="cheat-eq">\(\Phi_B=BA\cos\theta\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">Wire force</div><div class="cheat-eq">\(F=iLB\sin\phi\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">Speed of light</div><div class="cheat-eq">\(c=1/\sqrt{\varepsilon_0\mu_0}\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">Photon E</div><div class="cheat-eq">\(E=hf=hc/\lambda\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">de Broglie</div><div class="cheat-eq">\(\lambda=h/mv\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">Refractive n</div><div class="cheat-eq">\(n=c/v\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">Snell</div><div class="cheat-eq">\(n_1\sin\theta_1=n_2\sin\theta_2\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">Critical θc</div><div class="cheat-eq">\(\theta_c=\sin^{-1}(n_2/n_1)\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">Mirror eq.</div><div class="cheat-eq">\(\tfrac{1}{s'}+\tfrac{1}{s}=\tfrac{2}{r}\)</div></div>
+    <div class="cheat-item"><div class="cheat-topic">Magnification</div><div class="cheat-eq">\(m=-s'/s=h'/h\)</div></div>
+  </div>
+</section>
+
+<!-- ═══════════ QUIZ ═══════════ -->
+<div class="divider" id="quiz"></div>
+<section class="chapter">
+  <div class="chapter-header">
+    <span class="chapter-num"><span class="ar">بنك</span><span class="en">Bank</span></span>
+    <h2><span class="ar">أسئلة صح / خطأ — اضغط للإجابة</span><span class="en">True / False — Click to Reveal</span></h2>
+  </div>
+
+  <div class="card"><h3><span class="ar">الكهرومغناطيسية</span><span class="en">Electromagnetism</span></h3></div>
+
+  <div class="quiz-item" onclick="toggle(this)"><span class="quiz-toggle">▼</span>
+    <p class="quiz-question"><span class="ar">الشحنة الكهربية مكمَّمة دائماً.</span><span class="en">Electric charge is always quantized.</span></p>
+    <div class="quiz-answer"><div class="quiz-answer-inner true-ans">✓ <span class="ar">صح — q = ±n·e</span><span class="en">True — q = ±n·e</span></div></div>
+  </div>
+  <div class="quiz-item" onclick="toggle(this)"><span class="quiz-toggle">▼</span>
+    <p class="quiz-question"><span class="ar">القوة المغناطيسية تبذل شغلاً على الشحنة المتحركة.</span><span class="en">The magnetic force does work on a moving charge.</span></p>
+    <div class="quiz-answer"><div class="quiz-answer-inner false-ans">✗ <span class="ar">خطأ — F ⊥ v دائماً، إذن الشغل = 0</span><span class="en">False — F ⊥ v always, so work = 0</span></div></div>
+  </div>
+  <div class="quiz-item" onclick="toggle(this)"><span class="quiz-toggle">▼</span>
+    <p class="quiz-question"><span class="ar">قانون جاوس يصلح فقط للأنظمة المتماثلة.</span><span class="en">Gauss's law only works for symmetric systems.</span></p>
+    <div class="quiz-answer"><div class="quiz-answer-inner false-ans">✗ <span class="ar">خطأ — صحيح دائماً، لكن مفيد عملياً مع التماثل فقط</span><span class="en">False — always valid; only practical with symmetry</span></div></div>
+  </div>
+  <div class="quiz-item" onclick="toggle(this)"><span class="quiz-toggle">▼</span>
+    <p class="quiz-question"><span class="ar">في موصل عند الاتزان، المجال الكهربي داخله صفر.</span><span class="en">Inside a conductor at equilibrium, E = 0.</span></p>
+    <div class="quiz-answer"><div class="quiz-answer-inner true-ans">✓ <span class="ar">صح</span><span class="en">True</span></div></div>
+  </div>
+  <div class="quiz-item" onclick="toggle(this)"><span class="quiz-toggle">▼</span>
+    <p class="quiz-question"><span class="ar">زمن دورة السيكلوترون يعتمد على سرعة الجسيم.</span><span class="en">The cyclotron period depends on the particle's speed.</span></p>
+    <div class="quiz-answer"><div class="quiz-answer-inner false-ans">✗ <span class="ar">خطأ — يعتمد على m/(qB) فقط</span><span class="en">False — depends only on m/(qB)</span></div></div>
+  </div>
+
+  <div class="card" style="margin-top:20px"><h3><span class="ar">الجسر بين المغناطيسية والضوء</span><span class="en">Bridge: Magnetism ↔ Light</span></h3></div>
+
+  <div class="quiz-item" onclick="toggle(this)"><span class="quiz-toggle">▼</span>
+    <p class="quiz-question"><span class="ar">ماكسويل توقّع سرعة الضوء من ε₀ و μ₀.</span><span class="en">Maxwell predicted the speed of light from ε₀ and μ₀.</span></p>
+    <div class="quiz-answer"><div class="quiz-answer-inner true-ans">✓ <span class="ar">صح — c = 1/√(ε₀μ₀)</span><span class="en">True — c = 1/√(ε₀μ₀)</span></div></div>
+  </div>
+  <div class="quiz-item" onclick="toggle(this)"><span class="quiz-toggle">▼</span>
+    <p class="quiz-question"><span class="ar">الفوتون له طاقة وكتلة سكون.</span><span class="en">The photon has both energy and rest mass.</span></p>
+    <div class="quiz-answer"><div class="quiz-answer-inner false-ans">✗ <span class="ar">خطأ — له طاقة وكمية حركة لكن بلا كتلة سكون</span><span class="en">False — energy and momentum, but zero rest mass</span></div></div>
+  </div>
+
+  <div class="card" style="margin-top:20px"><h3><span class="ar">البصريات</span><span class="en">Optics</span></h3></div>
+
+  <div class="quiz-item" onclick="toggle(this)"><span class="quiz-toggle">▼</span>
+    <p class="quiz-question"><span class="ar">عند انتقال الضوء بين وسطين يتغير الطول الموجي دون التردد.</span><span class="en">Light crossing media changes wavelength but not frequency.</span></p>
+    <div class="quiz-answer"><div class="quiz-answer-inner true-ans">✓ <span class="ar">صح — n₁λ₁ = n₂λ₂</span><span class="en">True — n₁λ₁ = n₂λ₂</span></div></div>
+  </div>
+  <div class="quiz-item" onclick="toggle(this)"><span class="quiz-toggle">▼</span>
+    <p class="quiz-question"><span class="ar">معامل الانكسار في الفراغ = 1.</span><span class="en">The refractive index in vacuum equals 1.</span></p>
+    <div class="quiz-answer"><div class="quiz-answer-inner true-ans">✓ <span class="ar">صح</span><span class="en">True</span></div></div>
+  </div>
+  <div class="quiz-item" onclick="toggle(this)"><span class="quiz-toggle">▼</span>
+    <p class="quiz-question"><span class="ar">المرايا المحدبة تُعطي صوراً حقيقية.</span><span class="en">Convex mirrors give real images.</span></p>
+    <div class="quiz-answer"><div class="quiz-answer-inner false-ans">✗ <span class="ar">خطأ — وهمية، معتدلة، مصغّرة</span><span class="en">False — virtual, upright, diminished</span></div></div>
+  </div>
+  <div class="quiz-item" onclick="toggle(this)"><span class="quiz-toggle">▼</span>
+    <p class="quiz-question"><span class="ar">العدسة المكبرة البسيطة تعطي صورة حقيقية مكبرة.</span><span class="en">A simple magnifier gives a real magnified image.</span></p>
+    <div class="quiz-answer"><div class="quiz-answer-inner false-ans">✗ <span class="ar">خطأ — وهمية، معتدلة، مكبّرة</span><span class="en">False — virtual, upright, magnified</span></div></div>
+  </div>
+  <div class="quiz-item" onclick="toggle(this)"><span class="quiz-toggle">▼</span>
+    <p class="quiz-question"><span class="ar">الانعكاس الكلي الداخلي ممكن من الهواء إلى الزجاج.</span><span class="en">Total internal reflection can occur from air to glass.</span></p>
+    <div class="quiz-answer"><div class="quiz-answer-inner false-ans">✗ <span class="ar">خطأ — يحدث فقط من n أعلى إلى n أقل</span><span class="en">False — only from higher n to lower n</span></div></div>
+  </div>
+  <div class="quiz-item" onclick="toggle(this)"><span class="quiz-toggle">▼</span>
+    <p class="quiz-question"><span class="ar">قصر النظر يُعالَج بعدسة محدبة.</span><span class="en">Myopia is corrected by a convex lens.</span></p>
+    <div class="quiz-answer"><div class="quiz-answer-inner false-ans">✗ <span class="ar">خطأ — يُعالَج بعدسة مقعرة (−)</span><span class="en">False — corrected with a concave (−) lens</span></div></div>
+  </div>
+  <div class="quiz-item" onclick="toggle(this)"><span class="quiz-toggle">▼</span>
+    <p class="quiz-question"><span class="ar">الزيغ اللوني نتيجة مباشرة لتشتت الضوء.</span><span class="en">Chromatic aberration is a direct consequence of dispersion.</span></p>
+    <div class="quiz-answer"><div class="quiz-answer-inner true-ans">✓ <span class="ar">صح</span><span class="en">True</span></div></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p style="color:var(--cyan);font-weight:700;font-size:1rem;margin-bottom:6px">
+    PHYS102 · <span class="ar">الكهرومغناطيسية والبصريات</span><span class="en">Electromagnetism &amp; Optics</span>
+  </p>
+  <p>
+    <span class="ar">نسخة موحّدة ثنائية اللغة — كل المفاهيم مترابطة من الشحنة حتى الفوتون</span>
+    <span class="en">Unified bilingual edition — every concept connected, from charge to photon</span>
+  </p>
+  <p style="margin-top:8px;font-size:.75rem;color:#3c4660">
+    <span class="ar">افهم الترابط، لا تحفظ المعادلات بمعزل عن بعضها 💪</span>
+    <span class="en">Understand the connections, don't memorize equations in isolation 💪</span>
+  </p>
+</footer>
+
+<a href="#" id="top-btn" title="Top">↑</a>
+
+<div id="dl-panel" style="position:fixed;bottom:18px;inset-inline-start:18px;display:flex;flex-direction:column;gap:8px;z-index:50;font-family:inherit">
+  <a href="/__l5e/assets-v1/a9a799f9-0a7b-4ba5-b91f-e23f9dd128b7/PHYS102_2026.pdf" target="_blank" rel="noopener" download
+     style="display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,#4f9cf0,#22d3ee);color:#0b1530;font-weight:700;text-decoration:none;box-shadow:0 10px 30px -10px rgba(79,156,240,.6);transition:transform .25s ease,box-shadow .25s ease">
+    📘 <span class="ar">ملخص PHYS102 2026</span><span class="en">PHYS102 2026 Notes</span>
+  </a>
+  <a href="/__l5e/assets-v1/956f7cb1-93ea-4935-ac14-8729b95560f7/total.pdf" target="_blank" rel="noopener" download
+     style="display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,#8b5cf6,#f59e0b);color:#0b1530;font-weight:700;text-decoration:none;box-shadow:0 10px 30px -10px rgba(139,92,246,.6);transition:transform .25s ease,box-shadow .25s ease">
+    📕 <span class="ar">الملف الشامل</span><span class="en">Full Pack</span>
+  </a>
+</div>
+<style>
+  #dl-panel a:hover{transform:translateY(-2px) scale(1.02)}
+  .lowfx #dl-panel a:hover{transform:none}
+</style>
+
+<script>
+  // ===== Performance profile detection =====
+  const PRM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const COARSE = matchMedia('(pointer: coarse)').matches;
+  const MEM = (navigator.deviceMemory || 4);
+  const CORES = (navigator.hardwareConcurrency || 4);
+  const LOW = PRM || MEM <= 4 || CORES <= 4 || COARSE;
+  if (LOW) document.body.classList.add('lowfx');
+
+  // stars — adaptive density
+  const stars = document.getElementById('stars');
+  const STAR_COUNT = PRM ? 0 : (LOW ? 40 : 110);
+  if (STAR_COUNT > 0) {
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < STAR_COUNT; i++) {
+      const s = document.createElement('div'); s.className = 'star';
+      const sz = Math.random() * 2 + .5;
+      s.style.cssText = `width:${sz}px;height:${sz}px;top:${(Math.random()*100).toFixed(2)}%;left:${(Math.random()*100).toFixed(2)}%;--d:${(2+Math.random()*4).toFixed(2)}s;animation-delay:${(Math.random()*4).toFixed(2)}s`;
+      frag.appendChild(s);
+    }
+    stars.appendChild(frag);
+  }
+
+  // progress + back-to-top — rAF-throttled, passive listener, single read/write
+  const prog = document.getElementById('progress');
+  const btn = document.getElementById('top-btn');
+  let scrollPending = false;
+  let lastShow = false;
+  function onScrollFrame(){
+    scrollPending = false;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+    prog.style.transform = `scaleX(${(pct/100).toFixed(4)})`;
+    const show = window.scrollY > 400;
+    if (show !== lastShow) { btn.classList.toggle('show', show); lastShow = show; }
+  }
+  // switch progress to transform-based to avoid layout
+  prog.style.transformOrigin = 'left center';
+  prog.style.width = '100%';
+  window.addEventListener('scroll', () => {
+    if (!scrollPending) { scrollPending = true; requestAnimationFrame(onScrollFrame); }
+  }, { passive: true });
+  onScrollFrame();
+  // quiz toggle
+  function toggle(el){el.classList.toggle('open')}
+  // language switch
+  const body=document.body;
+  document.querySelectorAll('[data-lang-btn]').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const lang=b.getAttribute('data-lang-btn');
+      body.setAttribute('data-lang',lang);
+      document.documentElement.setAttribute('lang',lang);
+      document.documentElement.setAttribute('dir',lang==='ar'?'rtl':'ltr');
+      document.querySelectorAll('[data-lang-btn]').forEach(x=>x.classList.toggle('active',x===b));
+      try{localStorage.setItem('phys102_lang',lang)}catch(e){}
+      if(window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+    });
+  });
+  // restore
+  try{
+    const saved=localStorage.getItem('phys102_lang');
+    if(saved){ document.querySelector(`[data-lang-btn="${saved}"]`)?.click(); }
+  }catch(e){}
+
+  /* ===== Scroll reveal ===== */
+  (function(){
+    if (PRM) return;
+    // Narrower target set → fewer observed nodes, less work per frame
+    const targets=document.querySelectorAll('.chapter, .card, .hero-stats, .formula, blockquote');
+    targets.forEach((el,i)=>{
+      el.classList.add('reveal');
+      const m = i % 4;
+      if (m===1) el.classList.add('delay-1');
+      else if (m===2) el.classList.add('delay-2');
+      else if (m===3) el.classList.add('delay-3');
+    });
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    },{threshold:.08, rootMargin:'0px 0px -10% 0px'});
+    targets.forEach(el=>io.observe(el));
+  })();
+
+  /* ===== Shooting stars ===== */
+  (function(){
+    if (PRM || LOW) return;
+    let timer = null;
+    function spawn(){
+      if (document.hidden) return;
+      const s=document.createElement('div');
+      s.className='shooting';
+      s.style.top=(Math.random()*60)+'vh';
+      s.style.animationDuration=(1.6+Math.random()*1.6)+'s';
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(),3200);
+    }
+    function start(){ if (!timer) timer = setInterval(spawn, 5200); }
+    function stop(){ if (timer) { clearInterval(timer); timer = null; } }
+    document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+    start();
+    setTimeout(spawn, 1600);
+  })();
+
+  /* ===== Card tilt on hover — rAF throttled, skip on touch / low-end ===== */
+  (function(){
+    if (PRM || LOW || COARSE) return;
+    document.querySelectorAll('.card').forEach(card=>{
+      let rect = null, queued = false, tx = 0, ty = 0;
+      function apply(){
+        queued = false;
+        card.style.transform = `translate3d(0,-4px,0) rotateX(${(-ty*4).toFixed(2)}deg) rotateY(${(tx*4).toFixed(2)}deg)`;
+      }
+      card.addEventListener('mouseenter', () => { rect = card.getBoundingClientRect(); card.style.willChange = 'transform'; }, { passive: true });
+      card.addEventListener('mousemove', (ev) => {
+        if (!rect) rect = card.getBoundingClientRect();
+        tx = (ev.clientX - rect.left) / rect.width - .5;
+        ty = (ev.clientY - rect.top)  / rect.height - .5;
+        if (!queued) { queued = true; requestAnimationFrame(apply); }
+      }, { passive: true });
+      card.addEventListener('mouseleave', () => { card.style.transform=''; card.style.willChange='auto'; rect = null; }, { passive: true });
+    });
+  })();
+</script>
+</body>
+</html>
